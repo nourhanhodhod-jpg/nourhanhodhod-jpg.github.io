@@ -34,6 +34,23 @@
       <h2>الدروس القادمة</h2>
       <p>سنضيف هنا روابط لباقي الدروس قريباً.</p>
     </div>
+    <div class="card">
+  <h2>اختبر نفسك</h2>
+  <p>ما حل المعادلة $x^2 - 4 = 0$؟</p>
+  <button onclick="check(this, true)">$x = \pm 2$</button>
+  <button onclick="check(this, false)">$x = 4$</button>
+  <button onclick="check(this, false)">$x = 0$</button>
+  <p id="result"></p>
+</div>
+
+<script>
+function check(btn, correct) {
+  const r = document.getElementById('result');
+  r.textContent = correct ? '✅ إجابة صحيحة!' : '❌ حاول مرة أخرى';
+  r.style.color = correct ? 'green' : 'red';
+}
+</script>
+    button { padding: 10px 16px; margin: 4px; border: 0; border-radius: 8px; background: #1d4ed8; color: #fff; font-size: 16px; }
   </main>
 </body>
 </html>
