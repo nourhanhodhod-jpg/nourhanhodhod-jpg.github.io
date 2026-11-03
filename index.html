@@ -22,6 +22,9 @@
     h2 { margin-top: 0; color: #1d4ed8; }
     .katex-display { direction: ltr; }
     .opt { padding: 10px 16px; margin: 4px; border: 0; border-radius: 8px; background: #1d4ed8; color: #fff; font-size: 16px; }
+    #coins { position: fixed; top: 10px; right: 10px; z-index: 10; background: #fff; color: #b45309;
+         font-weight: bold; font-size: 18px; padding: 6px 14px; border-radius: 30px;
+         box-shadow: 0 2px 6px rgba(0,0,0,.25); direction: ltr; }
   </style>
 </head>
 <body>
@@ -35,6 +38,7 @@
   </section>
 
   <section id="lessons">
+    <div id="coins">🪙 <span id="coinCount">0</span></div>
     <header>
       <h1>موقعي التعليمي</h1>
       <p>أهلاً بك! هنا تتعلم خطوة بخطوة</p>
@@ -49,12 +53,12 @@
       </div>
 
       <div class="card">
-        <h2>اختبر نفسك</h2>
-        <p>ما حل المعادلة $x^2 - 4 = 0$؟</p>
-        <button class="opt" onclick="check(true)">$x = \pm 2$</button>
-        <button class="opt" onclick="check(false)">$x = 4$</button>
-        <button class="opt" onclick="check(false)">$x = 0$</button>
-        <p id="result"></p>
+  <h2>اختبر نفسك</h2>
+  <p>ما حل المعادلة $x^2 - 4 = 0$؟ (5 عملات)</p>
+  <button class="opt" onclick="check(this, true, 'q1')">$x = \pm 2$</button>
+  <button class="opt" onclick="check(this, false, 'q1')">$x = 4$</button>
+  <button class="opt" onclick="check(this, false, 'q1')">$x = 0$</button>
+  <p class="result"></p>
       </div>
     </main>
   </section>
@@ -65,11 +69,28 @@
       document.getElementById('lessons').style.display = 'block';
       window.scrollTo(0, 0);
     }
-    function check(correct) {
-      const r = document.getElementById('result');
-      r.textContent = correct ? '✅ إجابة صحيحة!' : '❌ حاول مرة أخرى';
-      r.style.color = correct ? 'green' : 'red';
-    }
+    let coins = 0, done = {};
+try {
+  coins = parseInt(localStorage.getItem('coins')) || 0;
+  done = JSON.parse(localStorage.getItem('done')) || {};
+} catch (e) {}
+document.getElementById('coinCount').textContent = coins;
+
+function check(btn, correct, id) {
+  const r = btn.parentElement.querySelector('.result');
+  if (done[id]) { r.textContent = 'أجبت على هذا السؤال من قبل'; r.style.color = '#555'; return; }
+  if (correct) {
+    done[id] = true;
+    coins += 5;
+    document.getElementById('coinCount').textContent = coins;
+    try { localStorage.setItem('coins', coins); localStorage.setItem('done', JSON.stringify(done)); } catch (e) {}
+    r.textContent = '✅ إجابة صحيحة! +5 عملات 🪙';
+    r.style.color = 'green';
+  } else {
+    r.textContent = '❌ حاول مرة أخرى';
+    r.style.color = 'red';
+  }
+}
   </script>
 </body>
 </html>
