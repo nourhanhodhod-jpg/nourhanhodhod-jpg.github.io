@@ -113,6 +113,7 @@ function check(btn, correct, id) {
     try { localStorage.setItem('coins', coins); localStorage.setItem('done', JSON.stringify(done)); } catch (e) {}
     r.textContent = '✅ إجابة صحيحة! +5 عملات 🪙';
     r.style.color = 'green';
+    celebrate();
   } else {
     r.textContent = '❌ حاول مرة أخرى';
     r.style.color = 'red';
