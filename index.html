@@ -38,6 +38,13 @@
 .chips span { background: rgba(255,255,255,.2); padding: 6px 14px; border-radius: 20px; font-size: .95em; }
 .start { margin-top: 18px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,.3); transition: transform .2s; }
 .start:hover { transform: scale(1.07); }
+    .balloon { position: fixed; bottom: -80px; font-size: 48px; z-index: 50; pointer-events: none; animation: rise 3s ease-in forwards; }
+@keyframes rise { to { transform: translateY(-115vh); } }
+#reward { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0); z-index: 60;
+          background: #fff; color: #b45309; font-size: 34px; font-weight: bold; padding: 24px 36px;
+          border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,.4); text-align: center;
+          pointer-events: none; transition: transform .3s; }
+#reward.show { transform: translate(-50%,-50%) scale(1); }
   </style>
 </head>
 <body>
@@ -111,6 +118,23 @@ function check(btn, correct, id) {
     r.style.color = 'red';
   }
 }
+    function celebrate() {
+  const em = ['🎈', '🎈', '🎉', '🎈'];
+  for (let i = 0; i < 18; i++) {
+    const b = document.createElement('div');
+    b.className = 'balloon';
+    b.textContent = em[i % em.length];
+    b.style.left = (Math.random() * 90) + 'vw';
+    b.style.animationDelay = (Math.random() * 0.8) + 's';
+    document.body.appendChild(b);
+    setTimeout(() => b.remove(), 4500);
+  }
+  let rw = document.getElementById('reward');
+  if (!rw) { rw = document.createElement('div'); rw.id = 'reward'; document.body.appendChild(rw); }
+  rw.innerHTML = '🪙<br>كسبت 5 عملات!';
+  setTimeout(() => rw.classList.add('show'), 10);
+  setTimeout(() => rw.classList.remove('show'), 2200);
+    }
   </script>
 </body>
 </html>
