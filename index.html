@@ -4,23 +4,73 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>موقعي التعليمي</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
   <style>
-    body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
-           font-family: Tahoma, Arial, sans-serif; background: linear-gradient(135deg, #1d4ed8, #7c3aed); color: #fff; text-align: center; }
+    body { margin: 0; font-family: Tahoma, Arial, sans-serif; line-height: 1.9; color: #222; }
+    #welcome { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
+               background: linear-gradient(135deg, #1d4ed8, #7c3aed); color: #fff; }
     .box { padding: 24px; max-width: 500px; }
-    h1 { font-size: 2.2em; margin-bottom: 8px; }
-    p { font-size: 1.2em; opacity: .9; }
     .count { background: rgba(255,255,255,.18); display: inline-block; padding: 10px 22px; border-radius: 30px; margin: 16px 0; }
-    .start { display: block; width: fit-content; margin: 20px auto 0; background: #fff; color: #1d4ed8; text-decoration: none;
-             font-size: 1.3em; font-weight: bold; padding: 14px 48px; border-radius: 40px; }
+    .start { background: #fff; color: #1d4ed8; border: 0; font-size: 1.3em; font-weight: bold; padding: 14px 48px; border-radius: 40px; }
+    #lessons { display: none; background: #f5f7fa; min-height: 100vh; }
+    header { background: #1d4ed8; color: #fff; padding: 28px 16px; text-align: center; }
+    main { max-width: 700px; margin: 20px auto; padding: 0 16px; }
+    .card { background: #fff; border-radius: 12px; padding: 18px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+    h2 { margin-top: 0; color: #1d4ed8; }
+    .katex-display { direction: ltr; }
+    .opt { padding: 10px 16px; margin: 4px; border: 0; border-radius: 8px; background: #1d4ed8; color: #fff; font-size: 16px; }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>موقعي التعليمي</h1>
-    <p>تعلّم خطوة بخطوة مع دروس مبسّطة وأسئلة تفاعلية</p>
-    <div class="count">👥 +100 مشترك</div>
-    <a class="start" href="lessons.html">ابدأ</a>
-  </div>
+
+  <section id="welcome">
+    <div class="box">
+      <h1>موقعي التعليمي</h1>
+      <p>تعلّم خطوة بخطوة مع دروس مبسّطة وأسئلة تفاعلية</p>
+      <div class="count">👥 +100 مشترك</div><br>
+      <button class="start" onclick="startLessons()">ابدأ</button>
+    </div>
+  </section>
+
+  <section id="lessons">
+    <header>
+      <h1>موقعي التعليمي</h1>
+      <p>أهلاً بك! هنا تتعلم خطوة بخطوة</p>
+    </header>
+    <main>
+      <div class="card">
+        <h2>درس تجريبي: المعادلة التربيعية</h2>
+        <p>الصيغة العامة للمعادلة التربيعية هي: $ax^2 + bx + c = 0$</p>
+        <p>ويكون حلها بالقانون:</p>
+        $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
+        <p>مثال: حل المعادلة $x^2 - 5x + 6 = 0$ يعطي $x = 2$ أو $x = 3$.</p>
+      </div>
+
+      <div class="card">
+        <h2>اختبر نفسك</h2>
+        <p>ما حل المعادلة $x^2 - 4 = 0$؟</p>
+        <button class="opt" onclick="check(true)">$x = \pm 2$</button>
+        <button class="opt" onclick="check(false)">$x = 4$</button>
+        <button class="opt" onclick="check(false)">$x = 0$</button>
+        <p id="result"></p>
+      </div>
+    </main>
+  </section>
+
+  <script>
+    function startLessons() {
+      document.getElementById('welcome').style.display = 'none';
+      document.getElementById('lessons').style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+    function check(correct) {
+      const r = document.getElementById('result');
+      r.textContent = correct ? '✅ إجابة صحيحة!' : '❌ حاول مرة أخرى';
+      r.style.color = correct ? 'green' : 'red';
+    }
+  </script>
 </body>
 </html>
