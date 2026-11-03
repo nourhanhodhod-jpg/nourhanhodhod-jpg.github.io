@@ -89,6 +89,7 @@
       window.scrollTo(0, 0);
     }
     let coins = 0, done = {};
+    if (location.search.includes('reset')) { try { localStorage.clear(); } catch (e) {} }
 try {
   coins = parseInt(localStorage.getItem('coins')) || 0;
   done = JSON.parse(localStorage.getItem('done')) || {};
