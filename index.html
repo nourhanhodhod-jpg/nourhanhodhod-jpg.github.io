@@ -8,6 +8,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
     onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body { margin: 0; font-family: Tahoma, Arial, sans-serif; line-height: 1.9; color: #222; }
     #welcome { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
@@ -25,15 +26,33 @@
     #coins { position: fixed; top: 10px; right: 10px; z-index: 10; background: #fff; color: #b45309;
          font-weight: bold; font-size: 18px; padding: 6px 14px; border-radius: 30px;
          box-shadow: 0 2px 6px rgba(0,0,0,.25); direction: ltr; }
+    body { font-family: 'Cairo', Tahoma, sans-serif; }
+#welcome { background: linear-gradient(135deg, #1e3a8a, #7c3aed, #db2777); background-size: 200% 200%; animation: bg 8s ease infinite; }
+@keyframes bg { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+.box { background: rgba(255,255,255,.12); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.3);
+       border-radius: 28px; padding: 36px 24px; margin: 20px; box-shadow: 0 10px 40px rgba(0,0,0,.25); }
+.logo { font-size: 64px; animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.box h1 { font-size: 2.4em; margin: 8px 0; }
+.chips { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 18px 0 6px; }
+.chips span { background: rgba(255,255,255,.2); padding: 6px 14px; border-radius: 20px; font-size: .95em; }
+.start { margin-top: 18px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,.3); transition: transform .2s; }
+.start:hover { transform: scale(1.07); }
   </style>
 </head>
 <body>
 
   <section id="welcome">
     <div class="box">
-      <h1>موقعي التعليمي</h1>
-      <p>تعلّم خطوة بخطوة مع دروس مبسّطة وأسئلة تفاعلية</p>
-      <button class="start" onclick="startLessons()">ابدأ</button>
+  <div class="logo">🎓</div>
+  <h1>موقعي التعليمي</h1>
+  <p>تعلّم خطوة بخطوة مع دروس مبسّطة وأسئلة تفاعلية</p>
+  <div class="chips">
+    <span>📚 دروس مبسّطة</span>
+    <span>🧠 أسئلة تفاعلية</span>
+    <span>🪙 اكسب عملات</span>
+  </div>
+  <button class="start" onclick="startLessons()">ابدأ الآن 🚀</button>
     </div>
   </section>
 
