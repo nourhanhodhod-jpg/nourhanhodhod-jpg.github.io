@@ -45,6 +45,9 @@
           border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,.4); text-align: center;
           pointer-events: none; transition: transform .3s; }
 #reward.show { transform: translate(-50%,-50%) scale(1); }
+    #angry { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0); z-index: 60;
+         font-size: 110px; pointer-events: none; transition: transform .25s; }
+#angry.show { transform: translate(-50%,-50%) scale(1); }
   </style>
 </head>
 <body>
@@ -117,6 +120,7 @@ function check(btn, correct, id) {
   } else {
     r.textContent = '❌ حاول مرة أخرى';
     r.style.color = 'red';
+    wrongEffect();
   }
 }
     function celebrate() {
@@ -135,6 +139,12 @@ function check(btn, correct, id) {
   rw.innerHTML = '🪙<br>كسبت 5 عملات!';
   setTimeout(() => rw.classList.add('show'), 10);
   setTimeout(() => rw.classList.remove('show'), 2200);
+    }
+    function wrongEffect() {
+  let a = document.getElementById('angry');
+  if (!a) { a = document.createElement('div'); a.id = 'angry'; a.textContent = '😠'; document.body.appendChild(a); }
+  setTimeout(() => a.classList.add('show'), 10);
+  setTimeout(() => a.classList.remove('show'), 1000);
     }
   </script>
 </body>
