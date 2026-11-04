@@ -106,23 +106,41 @@ try {
 } catch (e) {}
 document.getElementById('coinCount').textContent = coins;
 
+function showAnswer(card, chosen) {
+  card.querySelectorAll('.opt').forEach((o, i) => {
+    o.disabled = true;
+    if (o.getAttribute('onclick').includes('true')) o.style.background = '#16a34a';
+    else if (i === chosen) o.style.background = '#dc2626';
+    else o.style.background = '#94a3b8';
+  });
+}
+
 function check(btn, correct, id) {
-  const r = btn.parentElement.querySelector('.result');
-  if (done[id]) { r.textContent = 'أجبت على هذا السؤال من قبل'; r.style.color = '#555'; return; }
+  if (typeof done[id] === 'number') return;
+  const card = btn.parentElement;
+  const idx = Array.from(card.querySelectorAll('.opt')).indexOf(btn);
+  done[id] = idx;
+  showAnswer(card, idx);
+  const r = card.querySelector('.result');
   if (correct) {
-    done[id] = true;
     coins += 5;
     document.getElementById('coinCount').textContent = coins;
-    try { localStorage.setItem('coins', coins); localStorage.setItem('done', JSON.stringify(done)); } catch (e) {}
     r.textContent = '✅ إجابة صحيحة! +5 عملات 🪙';
     r.style.color = 'green';
     celebrate();
   } else {
-    r.textContent = '❌ حاول مرة أخرى';
-    r.style.color = 'red';
+    r.textContent = '';
     wrongEffect();
   }
+  try { localStorage.setItem('coins', coins); localStorage.setItem('done', JSON.stringify(done)); } catch (e) {}
 }
+
+document.querySelectorAll('.card').forEach(card => {
+  const first = card.querySelector('.opt');
+  if (!first) return;
+  const m = first.getAttribute('onclick').match(/'(q\d+)'/);
+  if (m && typeof done[m[1]] === 'number') showAnswer(card, done[m[1]]);
+});
     function celebrate() {
   const em = ['🎈', '🎈', '🎉', '🎈'];
   for (let i = 0; i < 18; i++) {
@@ -141,11 +159,16 @@ function check(btn, correct, id) {
   setTimeout(() => rw.classList.remove('show'), 2200);
     }
     function wrongEffect() {
-  let a = document.getElementById('angry');
-  if (!a) { a = document.createElement('div'); a.id = 'angry'; a.textContent = '😠'; document.body.appendChild(a); }
-  setTimeout(() => a.classList.add('show'), 10);
-  setTimeout(() => a.classList.remove('show'), 1000);
-    }
+  for (let i = 0; i < 14; i++) {
+    const b = document.createElement('div');
+    b.className = 'balloon';
+    b.textContent = '😠';
+    b.style.left = (Math.random() * 90) + 'vw';
+    b.style.animationDelay = (Math.random() * 0.8) + 's';
+    document.body.appendChild(b);
+    setTimeout(() => b.remove(), 4500);
+  }
+}
   </script>
 </body>
 </html>
