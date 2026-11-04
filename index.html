@@ -138,6 +138,8 @@ const $=id=>document.getElementById(id);
 const LS={g:k=>{try{return localStorage.getItem(k)}catch(e){return null}},s:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
 if(location.search.includes('reset')){try{localStorage.clear()}catch(e){}}
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const FORM_URL='https://docs.google.com/forms/d/e/1FAIpQLSe1BbPEqLTkEypDF5KelVraF8V2WuZ5O33cVmrKMUbegbxAuw/formResponse';
+function send(ev,detail){if(!name)return;try{const f=new URLSearchParams();f.append('entry.1539765357',name);f.append('entry.1833720092',ev);f.append('entry.380636749',detail);fetch(FORM_URL,{method:'POST',mode:'no-cors',body:f})}catch(e){}}
 function rm(el){if(window.renderMathInElement)renderMathInElement(el||document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})}
 
 let coins=parseInt(LS.g('coins'))||0,done={},name=LS.g('name')||'',editing=false,cur=0,st=parseInt(LS.g('st'))||1,size=parseInt(LS.g('fs'))||18;
@@ -162,6 +164,7 @@ function saveName(){
   const v=$('nameIn').value.trim();
   if(!v){$('nameWarn').textContent='اكتبي اسمك الأول علشان نبدأ 💗';$('nameIn').focus();return}
   name=v;editing=false;LS.s('name',name);$('nameWarn').textContent='';renderHome();renderQ();
+  send('سجّلت الاسم','');
 }
 function editName(){editing=true;renderHome();$('nameIn').focus()}
 function show(v){
@@ -208,7 +211,7 @@ function pick(i){
   const q=Q[cur];if(answered(q))return;
   done[q.id]=i;const right=i===q.c;if(right)coins+=5;
   LS.s('coins',coins);LS.s('done',JSON.stringify(done));
-  paint(i,true);upd();right?celebrate():wrongEffect();
+  paint(i,true);upd();send('أجابت على '+q.id,(right?'صح':'غلط')+' | عملات: '+coins);right?celebrate():wrongEffect();
 }
 function nextQ(){cur++;renderQ();$('qArea').scrollIntoView({behavior:'smooth'})}
 function speak(){
