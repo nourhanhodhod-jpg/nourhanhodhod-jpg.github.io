@@ -1,174 +1,233 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>موقعي التعليمي</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    body { margin: 0; font-family: Tahoma, Arial, sans-serif; line-height: 1.9; color: #222; }
-    #welcome { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center;
-               background: linear-gradient(135deg, #1d4ed8, #7c3aed); color: #fff; }
-    .box { padding: 24px; max-width: 500px; }
-    .count { background: rgba(255,255,255,.18); display: inline-block; padding: 10px 22px; border-radius: 30px; margin: 16px 0; }
-    .start { background: #fff; color: #1d4ed8; border: 0; font-size: 1.3em; font-weight: bold; padding: 14px 48px; border-radius: 40px; }
-    #lessons { display: none; background: #f5f7fa; min-height: 100vh; }
-    header { background: #1d4ed8; color: #fff; padding: 28px 16px; text-align: center; }
-    main { max-width: 700px; margin: 20px auto; padding: 0 16px; }
-    .card { background: #fff; border-radius: 12px; padding: 18px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
-    h2 { margin-top: 0; color: #1d4ed8; }
-    .katex-display { direction: ltr; }
-    .opt { padding: 10px 16px; margin: 4px; border: 0; border-radius: 8px; background: #1d4ed8; color: #fff; font-size: 16px; }
-    #coins { position: fixed; top: 10px; right: 10px; z-index: 10; background: #fff; color: #b45309;
-         font-weight: bold; font-size: 18px; padding: 6px 14px; border-radius: 30px;
-         box-shadow: 0 2px 6px rgba(0,0,0,.25); direction: ltr; }
-    body { font-family: 'Cairo', Tahoma, sans-serif; }
-#welcome { background: linear-gradient(135deg, #1e3a8a, #7c3aed, #db2777); background-size: 200% 200%; animation: bg 8s ease infinite; }
-@keyframes bg { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-.box { background: rgba(255,255,255,.12); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.3);
-       border-radius: 28px; padding: 36px 24px; margin: 20px; box-shadow: 0 10px 40px rgba(0,0,0,.25); }
-.logo { font-size: 64px; animation: float 3s ease-in-out infinite; }
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-.box h1 { font-size: 2.4em; margin: 8px 0; }
-.chips { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 18px 0 6px; }
-.chips span { background: rgba(255,255,255,.2); padding: 6px 14px; border-radius: 20px; font-size: .95em; }
-.start { margin-top: 18px; cursor: pointer; box-shadow: 0 6px 20px rgba(0,0,0,.3); transition: transform .2s; }
-.start:hover { transform: scale(1.07); }
-    .balloon { position: fixed; bottom: -80px; font-size: 48px; z-index: 50; pointer-events: none; animation: rise 3s ease-in forwards; }
-@keyframes rise { to { transform: translateY(-115vh); } }
-#reward { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0); z-index: 60;
-          background: #fff; color: #b45309; font-size: 34px; font-weight: bold; padding: 24px 36px;
-          border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,.4); text-align: center;
-          pointer-events: none; transition: transform .3s; }
-#reward.show { transform: translate(-50%,-50%) scale(1); }
-    #angry { position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%) scale(0); z-index: 60;
-         font-size: 110px; pointer-events: none; transition: transform .25s; }
-#angry.show { transform: translate(-50%,-50%) scale(1); }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>موقعي التعليمي 🎀</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="rm()"></script>
+<style>
+:root{--p:#E9A9C2;--s:#FCE8F0;--bg:#FFF9F7;--a:#C77E9C;--b:#A9C7E9;--ink:#4a2a3a;--deep:#9b4a70;--btn:#b3567f}
+*{box-sizing:border-box}
+html{font-size:18px}
+body{margin:0;font-family:'Cairo',Tahoma,sans-serif;background:var(--bg);color:var(--ink);line-height:1.9}
+[hidden]{display:none!important}
+button:focus-visible,input:focus-visible{outline:3px solid var(--b);outline-offset:2px}
+header{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;justify-content:space-between;padding:6px 12px;background:#fff;border-bottom:2px solid var(--s);box-shadow:0 2px 10px rgba(199,126,156,.15)}
+.brand{font-weight:800;color:var(--deep);font-size:1.1rem}
+nav,.tools{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.nb,.ib,.sm,.link{font:inherit;border:0;cursor:pointer;border-radius:20px;background:var(--s);color:var(--deep);padding:2px 14px;min-height:40px;font-weight:700}
+#coins{background:#fff3d6;color:#7a4e00;padding:2px 12px;border-radius:20px;font-weight:800;direction:ltr}
+main{max-width:720px;margin:0 auto;padding:12px 16px 40px}
+.hero{text-align:center;padding:26px 8px 8px;position:relative}
+.hero h1{color:var(--deep);font-size:1.7rem;line-height:1.5;margin:0 0 8px}
+.fl{position:absolute;font-size:1.4rem;opacity:.7;animation:fl 4s ease-in-out infinite}
+.f1{top:8px;right:6px}.f2{top:60px;left:10px;animation-delay:1s}
+@keyframes fl{50%{transform:translateY(-8px)}}
+.card{background:#fff;border-radius:22px;padding:20px;margin:16px 0;box-shadow:0 6px 20px rgba(199,126,156,.18);border:1px solid var(--s)}
+.pink{background:linear-gradient(135deg,var(--s),#fff);border:2px solid var(--p);text-align:center}
+.card h2,.card h3{color:var(--deep);margin:0 0 6px;line-height:1.5}
+.bow{font-size:2.2rem}
+#nameIn{width:100%;font:inherit;font-size:1.1rem;padding:12px 16px;border:2px solid var(--p);border-radius:18px;text-align:center;background:#fff;color:var(--ink)}
+#nameWarn{color:#a1304f;min-height:1.6em;margin:4px 0;font-weight:700}
+.btn{font:inherit;font-weight:800;font-size:1.1rem;border:0;cursor:pointer;background:var(--btn);color:#fff;padding:12px 28px;border-radius:30px;margin-top:8px;box-shadow:0 5px 14px rgba(179,86,127,.35);transition:transform .2s}
+.btn:hover{transform:scale(1.05)}
+.link{background:none;display:block;margin:6px auto 0;text-decoration:underline}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.grid .card{margin:0;text-align:center;padding:14px;font-weight:700}
+.grid span{font-size:1.8rem;display:block}
+.formula{background:var(--s);border:2px dashed var(--a);border-radius:16px;padding:6px;overflow-x:auto}
+.katex{direction:ltr;unicode-bidi:isolate}
+.katex-display{direction:ltr;margin:.4em 0}
+.step{border-right:6px solid var(--p)}
+.step ol{padding-right:22px}
+.bar{height:14px;background:var(--s);border-radius:10px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--p),var(--a));transition:width .5s}
+.lv{background:var(--s);color:var(--deep);padding:2px 12px;border-radius:12px;font-weight:700;font-size:.85rem}
+.qt{font-size:1.2rem;font-weight:700}
+.opts{display:grid;gap:10px;margin:12px 0}
+.opt{font:inherit;font-size:1.1rem;min-height:54px;border:2px solid var(--p);background:#fff;color:var(--ink);border-radius:16px;cursor:pointer;padding:8px 14px}
+.opt:hover:not(:disabled){background:var(--s)}
+.opt:disabled{cursor:default}
+.opt.ok{background:#dff3e4;border-color:#2e8b57;color:#14532d;font-weight:800}
+.opt.no{background:#fde0e6;border-color:#c0392b;color:#7f1d1d;font-weight:800}
+.opt.dim{opacity:.55}
+.fb{font-weight:800;min-height:1.5em}.good{color:#14532d}.bad{color:#7f1d1d}
+.hint{background:#eaf2fb;border-radius:14px;padding:8px 14px}
+.exp{background:#fff8e6;border-radius:14px;padding:8px 14px;margin-top:8px}
+.tl{display:flex;gap:8px;flex-wrap:wrap}
+.balloon{position:fixed;bottom:-80px;font-size:48px;z-index:50;pointer-events:none;animation:rise 3s ease-in forwards}
+@keyframes rise{to{transform:translateY(-115vh)}}
+#reward{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:60;background:#fff;color:#8a5a00;font-size:1.8rem;font-weight:800;padding:22px 34px;border-radius:24px;box-shadow:0 10px 40px rgba(0,0,0,.35);text-align:center;pointer-events:none;transition:transform .3s}
+#reward.show{transform:translate(-50%,-50%) scale(1)}
+#loader{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;font-size:64px;z-index:100;transition:opacity .4s}
+#loader span{animation:fl 1s ease-in-out infinite}
+#loader.off{opacity:0;pointer-events:none}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (min-width:600px){.hero h1{font-size:2.1rem}.opts{grid-template-columns:1fr 1fr}}
+</style>
 </head>
 <body>
-
-  <section id="welcome">
-    <div class="box">
-  <div class="logo">🎓</div>
-  <h1>موقعي التعليمي</h1>
-  <p>تعلّم خطوة بخطوة مع دروس مبسّطة وأسئلة تفاعلية</p>
-  <div class="chips">
-    <span>📚 دروس مبسّطة</span>
-    <span>🧠 أسئلة تفاعلية</span>
-    <span>🪙 اكسب عملات</span>
+<div id="loader"><span>🎀</span></div>
+<header>
+  <div class="brand">🎀 موقعي التعليمي</div>
+  <nav>
+    <button class="nb" onclick="show('home')">الرئيسية</button>
+    <button class="nb" onclick="show('lessons')">الدروس</button>
+  </nav>
+  <div class="tools">
+    <button class="ib" onclick="fs(-1)" aria-label="تصغير الخط">أ-</button>
+    <button class="ib" onclick="fs(1)" aria-label="تكبير الخط">أ+</button>
+    <button class="ib" id="mute" onclick="toggleMute()" aria-label="تشغيل أو إيقاف الصوت">🔊</button>
+    <div id="coins">🪙 <span id="coinCount">0</span> ⭐ <span id="starCount">0</span></div>
   </div>
-  <button class="start" onclick="startLessons()">ابدأ الآن 🚀</button>
-    </div>
+</header>
+
+<main id="home">
+  <section class="hero">
+    <span class="fl f1">⭐</span><span class="fl f2">💗</span>
+    <h1>أهلاً بيك في عالم الرياضيات! 🎀</h1>
+    <p>هنا هنتعلم خطوة بخطوة، ونكتشف إن الرياضيات أسهل مما تتخيل.</p>
   </section>
-
-  <section id="lessons">
-    <div id="coins">🪙 <span id="coinCount">0</span></div>
-    <header>
-      <h1>موقعي التعليمي</h1>
-      <p>أهلاً بك! هنا تتعلم خطوة بخطوة</p>
-    </header>
-    <main>
-      <div class="card">
-        <h2>درس تجريبي: المعادلة التربيعية</h2>
-        <p>الصيغة العامة للمعادلة التربيعية هي: $ax^2 + bx + c = 0$</p>
-        <p>ويكون حلها بالقانون:</p>
-        $$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
-        <p>مثال: حل المعادلة $x^2 - 5x + 6 = 0$ يعطي $x = 2$ أو $x = 3$.</p>
-      </div>
-
-      <div class="card">
-  <h2>اختبر نفسك</h2>
-  <p>ما حل المعادلة $x^2 - 4 = 0$؟ (5 عملات)</p>
-  <button class="opt" onclick="check(this, true, 'q1')">$x = \pm 2$</button>
-  <button class="opt" onclick="check(this, false, 'q1')">$x = 4$</button>
-  <button class="opt" onclick="check(this, false, 'q1')">$x = 0$</button>
-  <p class="result"></p>
-      </div>
-    </main>
+  <section class="card pink" id="nameCard">
+    <div class="bow">🎀</div>
+    <h2>بس الأول.. نعرف اسمك إيه؟ 💗</h2>
+    <p>اكتبي اسمك علشان نبدأ رحلتنا مع بعض!</p>
+    <input id="nameIn" maxlength="20" placeholder="اسمك هنا يا بطلة..." aria-label="اسمك" autocomplete="off" onkeydown="if(event.key==='Enter')saveName()">
+    <p id="nameWarn" role="alert"></p>
+    <button class="btn" onclick="saveName()">يلا بينا! ✨</button>
   </section>
+  <section class="card pink" id="greetCard" hidden>
+    <div class="bow">🎀</div>
+    <h2 id="greet"></h2>
+    <button class="btn" onclick="show('lessons')">يلا نبدأ المذاكرة</button>
+    <button class="link" onclick="editName()">تعديل الاسم ✏️</button>
+  </section>
+  <section class="grid">
+    <div class="card"><span>📖</span>شرح مبسط</div>
+    <div class="card"><span>✏️</span>أمثلة محلولة</div>
+    <div class="card"><span>🎮</span>تدريبات تفاعلية</div>
+    <div class="card"><span>📈</span>متابعة التقدم</div>
+  </section>
+  <section class="card"><h3>🌷 كل خطوة صغيرة بتقرّبك</h3><p>مفيش حد بيفهم كل حاجة من أول مرة. خدي وقتك، ولو احتجتي تلميح هتلاقيه جنب كل سؤال.</p></section>
+</main>
 
-  <script>
-    function startLessons() {
-      document.getElementById('welcome').style.display = 'none';
-      document.getElementById('lessons').style.display = 'block';
-      window.scrollTo(0, 0);
-    }
-    let coins = 0, done = {};
-    if (location.search.includes('reset')) { try { localStorage.clear(); } catch (e) {} }
-try {
-  coins = parseInt(localStorage.getItem('coins')) || 0;
-  done = JSON.parse(localStorage.getItem('done')) || {};
-} catch (e) {}
-document.getElementById('coinCount').textContent = coins;
+<main id="lessons" hidden>
+  <section class="card pink"><div class="bow">📐</div><h2>درس: المعادلة التربيعية</h2><p>هنتعلمها على خطوات صغيرة. اضغطي «الخطوة التالية» وقت ما تكوني جاهزة.</p></section>
+  <div id="steps">
+    <section class="card step"><h3>1️⃣ إيه هي المعادلة التربيعية؟</h3><p>الصيغة العامة للمعادلة التربيعية هي: $ax^2 + bx + c = 0$</p></section>
+    <section class="card step" hidden><h3>2️⃣ القانون</h3><p>ويكون حلها بالقانون:</p><div class="formula">$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$</div></section>
+    <section class="card step" hidden><h3>3️⃣ مثال محلول</h3><p>مثال: حل المعادلة $x^2 - 5x + 6 = 0$ يعطي $x = 2$ أو $x = 3$.</p><p>إزاي وصلنا لده؟</p>
+      <ol><li>نحدد: $a = 1$ و $b = -5$ و $c = 6$</li><li>نحسب المميز: $b^2 - 4ac = 25 - 24 = 1$</li><li>نعوض: $x = \frac{5 \pm 1}{2}$</li><li>إذن $x = 3$ أو $x = 2$</li></ol></section>
+  </div>
+  <div style="text-align:center"><button class="btn" id="nextStep" onclick="nextStep()">الخطوة التالية ⬅️</button></div>
+  <section id="quizBox" hidden>
+    <div class="card"><h2>🧠 اختبر نفسك</h2><div class="bar" role="progressbar" aria-label="تقدم الاختبار"><i id="barFill"></i></div><small id="barTxt"></small></div>
+    <div id="qArea"></div>
+  </section>
+</main>
 
-function showAnswer(card, chosen) {
-  card.querySelectorAll('.opt').forEach((o, i) => {
-    o.disabled = true;
-    if (o.getAttribute('onclick').includes('true')) o.style.background = '#16a34a';
-    else if (i === chosen) o.style.background = '#dc2626';
-    else o.style.background = '#94a3b8';
+<script>
+const $=id=>document.getElementById(id);
+const LS={g:k=>{try{return localStorage.getItem(k)}catch(e){return null}},s:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}}};
+if(location.search.includes('reset')){try{localStorage.clear()}catch(e){}}
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function rm(el){if(window.renderMathInElement)renderMathInElement(el||document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]})}
+
+let coins=parseInt(LS.g('coins'))||0,done={},name=LS.g('name')||'',editing=false,cur=0,st=parseInt(LS.g('st'))||1,size=parseInt(LS.g('fs'))||18;
+try{done=JSON.parse(LS.g('done'))||{}}catch(e){}
+const call=()=>name?'يا '+esc(name):'يا بطلة';
+
+const Q=[
+{id:'q1',lv:'سهل 🌱',t:'ما حل المعادلة $x^2 - 4 = 0$؟',o:['$x = \\pm 2$','$x = 4$','$x = 0$'],c:0,h:'انقلي 4 للطرف التاني، وبعدين دوري على الرقم اللي مربعه 4.',w:'نقلنا 4 للطرف الثاني فصارت $x^2 = 4$، والعددان اللذان مربعهما 4 هما $2$ و $-2$.',sp:'ما حل المعادلة: إكس تربيع ناقص أربعة يساوي صفر؟'},
+{id:'q2',lv:'متوسط 🌸',t:'ما قيمة المميز $b^2 - 4ac$ للمعادلة $x^2 - 5x + 6 = 0$؟',o:['$49$','$1$','$-1$'],c:1,h:'هنا $a = 1$ و $b = -5$ و $c = 6$. عوضي في القانون.',w:'$(-5)^2 - 4(1)(6) = 25 - 24 = 1$',sp:'ما قيمة المميز للمعادلة: إكس تربيع ناقص خمسة إكس زائد ستة يساوي صفر؟'},
+{id:'q3',lv:'تحدي 🏆',t:'ما حل المعادلة $x^2 - 5x + 6 = 0$؟',o:['$x = -2$ أو $x = -3$','$x = 1$ أو $x = 6$','$x = 2$ أو $x = 3$'],c:2,h:'المميز طلع 1، فعوضي: $x = \\frac{5 \\pm 1}{2}$',w:'$x = \\frac{5 \\pm 1}{2}$ فنحصل على $x = 3$ أو $x = 2$.',sp:'ما حل المعادلة: إكس تربيع ناقص خمسة إكس زائد ستة يساوي صفر؟'}];
+
+const answered=q=>typeof done[q.id]==='number';
+const stars=()=>Q.filter(q=>done[q.id]===q.c).length;
+function upd(){const n=Q.filter(answered).length;$('coinCount').textContent=coins;$('starCount').textContent=stars();$('barFill').style.width=(n/Q.length*100)+'%';$('barTxt').textContent='أنجزتي '+n+' من '+Q.length+' أسئلة'}
+
+function renderHome(){
+  $('nameCard').hidden=!!name&&!editing;$('greetCard').hidden=!name||editing;
+  if(name)$('greet').textContent='أهلاً يا '+name+'! مستعدة نكتشف الرياضيات مع بعض؟ 🎀';
+  $('nameIn').value=editing?name:'';
+}
+function saveName(){
+  const v=$('nameIn').value.trim();
+  if(!v){$('nameWarn').textContent='اكتبي اسمك الأول علشان نبدأ 💗';$('nameIn').focus();return}
+  name=v;editing=false;LS.s('name',name);$('nameWarn').textContent='';renderHome();renderQ();
+}
+function editName(){editing=true;renderHome();$('nameIn').focus()}
+function show(v){
+  if(v==='lessons'&&!name){v='home';$('nameWarn').textContent='اكتبي اسمك الأول علشان نبدأ المذاكرة 💗';$('nameCard').hidden=false;$('greetCard').hidden=true}
+  $('home').hidden=v!=='home';$('lessons').hidden=v!=='lessons';LS.s('view',v);window.scrollTo(0,0);
+}
+
+function steps(){
+  const s=document.querySelectorAll('.step'),fin=st>=s.length;
+  s.forEach((e,i)=>e.hidden=i>=st);$('nextStep').hidden=fin;$('quizBox').hidden=!fin;
+}
+function nextStep(){st++;LS.s('st',st);steps();const s=document.querySelectorAll('.step')[Math.min(st,3)-1];s.scrollIntoView({behavior:'smooth',block:'start'})}
+
+function renderQ(){
+  const a=$('qArea');a.innerHTML='';
+  if(cur>=Q.length){
+    a.innerHTML='<div class="card pink"><div class="bow">🏆</div><h2>خلصتي الاختبار '+call()+'!</h2><p>جمعتي '+stars()+' ⭐ من '+Q.length+' ومعاكي '+coins+' 🪙</p><p>إنتي بتتحسني مع كل خطوة، وده أهم حاجة 💗</p></div>';return;
+  }
+  const q=Q[cur],d=document.createElement('div');d.className='card';
+  d.innerHTML='<span class="lv">'+q.lv+'</span><h3>السؤال '+(cur+1)+' من '+Q.length+'</h3><p class="qt">'+q.t+'</p>'+
+  '<div class="tl"><button class="sm" onclick="speak()">🔊 اقرأي السؤال</button><button class="sm" onclick="$(\'hint\').hidden=false">💡 تلميح</button></div>'+
+  '<p id="hint" class="hint" hidden>'+q.h+'</p><div class="opts">'+q.o.map((o,i)=>'<button class="opt" onclick="pick('+i+')">'+o+'</button>').join('')+'</div>'+
+  '<p id="fb" class="fb" aria-live="polite"></p><div id="exp" class="exp" hidden></div><button id="nx" class="btn" hidden onclick="nextQ()"></button>';
+  a.appendChild(d);
+  if(answered(q))paint(done[q.id],false);
+  rm(d);
+}
+function paint(i,fresh){
+  const q=Q[cur];
+  document.querySelectorAll('#qArea .opt').forEach((b,k)=>{
+    b.disabled=true;
+    if(k===q.c){b.classList.add('ok');b.insertAdjacentHTML('afterbegin','✓ ')}
+    else if(k===i){b.classList.add('no');b.insertAdjacentHTML('afterbegin','✗ ')}
+    else b.classList.add('dim');
   });
+  const f=$('fb');
+  if(i===q.c){f.textContent='برافو '+(name?'يا '+name:'يا بطلة')+'! إجابتك صحيحة 💗'+(fresh?' +5 🪙':'');f.className='fb good'}
+  else{f.textContent='ولا يهمك '+(name?'يا '+name:'يا بطلة')+'، كل غلطة بتعلمنا حاجة 💗 الإجابة الصحيحة معلّمة بعلامة ✓ وباللون الأخضر.';f.className='fb bad'}
+  const e=$('exp');e.innerHTML='<b>ليه؟</b> '+q.w;e.hidden=false;
+  const n=$('nx');n.hidden=false;n.textContent=cur<Q.length-1?'السؤال التالي ⬅️':'شوفي نتيجتك 🌟';
+  rm(e);
 }
+function pick(i){
+  const q=Q[cur];if(answered(q))return;
+  done[q.id]=i;const right=i===q.c;if(right)coins+=5;
+  LS.s('coins',coins);LS.s('done',JSON.stringify(done));
+  paint(i,true);upd();right?celebrate():wrongEffect();
+}
+function nextQ(){cur++;renderQ();$('qArea').scrollIntoView({behavior:'smooth'})}
+function speak(){
+  if(LS.g('mute')==='1'||!window.speechSynthesis)return;
+  speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(Q[cur].sp);u.lang='ar-SA';u.rate=.85;speechSynthesis.speak(u);
+}
+function toggleMute(){const m=LS.g('mute')==='1'?'0':'1';LS.s('mute',m);$('mute').textContent=m==='1'?'🔇':'🔊';if(m==='1'&&window.speechSynthesis)speechSynthesis.cancel()}
+function fs(d){size=Math.max(14,Math.min(26,size+d*2));document.documentElement.style.fontSize=size+'px';LS.s('fs',size)}
 
-function check(btn, correct, id) {
-  if (typeof done[id] === 'number') return;
-  const card = btn.parentElement;
-  const idx = Array.from(card.querySelectorAll('.opt')).indexOf(btn);
-  done[id] = idx;
-  showAnswer(card, idx);
-  const r = card.querySelector('.result');
-  if (correct) {
-    coins += 5;
-    document.getElementById('coinCount').textContent = coins;
-    r.textContent = '✅ إجابة صحيحة! +5 عملات 🪙';
-    r.style.color = 'green';
-    celebrate();
-  } else {
-    r.textContent = '';
-    wrongEffect();
-  }
-  try { localStorage.setItem('coins', coins); localStorage.setItem('done', JSON.stringify(done)); } catch (e) {}
+function fly(list,n){for(let i=0;i<n;i++){const b=document.createElement('div');b.className='balloon';b.textContent=list[i%list.length];b.style.left=Math.random()*90+'vw';b.style.animationDelay=Math.random()*.8+'s';document.body.appendChild(b);setTimeout(()=>b.remove(),4500)}}
+function celebrate(){
+  fly(['🎈','🎀','🎉','⭐'],18);
+  let r=$('reward');if(!r){r=document.createElement('div');r.id='reward';document.body.appendChild(r)}
+  r.innerHTML='🪙<br>كسبتي 5 عملات!';
+  setTimeout(()=>r.classList.add('show'),10);setTimeout(()=>r.classList.remove('show'),2200);
 }
+function wrongEffect(){fly(['😠'],14)}
 
-document.querySelectorAll('.card').forEach(card => {
-  const first = card.querySelector('.opt');
-  if (!first) return;
-  const m = first.getAttribute('onclick').match(/'(q\d+)'/);
-  if (m && typeof done[m[1]] === 'number') showAnswer(card, done[m[1]]);
-});
-    function celebrate() {
-  const em = ['🎈', '🎈', '🎉', '🎈'];
-  for (let i = 0; i < 18; i++) {
-    const b = document.createElement('div');
-    b.className = 'balloon';
-    b.textContent = em[i % em.length];
-    b.style.left = (Math.random() * 90) + 'vw';
-    b.style.animationDelay = (Math.random() * 0.8) + 's';
-    document.body.appendChild(b);
-    setTimeout(() => b.remove(), 4500);
-  }
-  let rw = document.getElementById('reward');
-  if (!rw) { rw = document.createElement('div'); rw.id = 'reward'; document.body.appendChild(rw); }
-  rw.innerHTML = '🪙<br>كسبت 5 عملات!';
-  setTimeout(() => rw.classList.add('show'), 10);
-  setTimeout(() => rw.classList.remove('show'), 2200);
-    }
-    function wrongEffect() {
-  for (let i = 0; i < 14; i++) {
-    const b = document.createElement('div');
-    b.className = 'balloon';
-    b.textContent = '😠';
-    b.style.left = (Math.random() * 90) + 'vw';
-    b.style.animationDelay = (Math.random() * 0.8) + 's';
-    document.body.appendChild(b);
-    setTimeout(() => b.remove(), 4500);
-  }
-}
-  </script>
+document.documentElement.style.fontSize=size+'px';
+$('mute').textContent=LS.g('mute')==='1'?'🔇':'🔊';
+cur=Q.findIndex(q=>!answered(q));if(cur<0)cur=Q.length;
+renderHome();steps();renderQ();upd();show(LS.g('view')||'home');
+setTimeout(()=>$('loader').classList.add('off'),900);
+</script>
 </body>
 </html>
