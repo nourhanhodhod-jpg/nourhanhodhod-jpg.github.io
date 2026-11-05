@@ -120,6 +120,7 @@ main{max-width:720px;margin:0 auto;padding:12px 16px 40px}
 
 <main id="lessons" hidden>
   <section class="card pink"><div class="bow">📐</div><h2>درس: المعادلة التربيعية</h2><p>هنتعلمها على خطوات صغيرة. اضغطي «الخطوة التالية» وقت ما تكوني جاهزة.</p></section>
+  <div class="vbox" data-lesson="l1"></div>
   <div id="steps">
     <section class="card step"><h3>1️⃣ إيه هي المعادلة التربيعية؟</h3><p>الصيغة العامة للمعادلة التربيعية هي: $ax^2 + bx + c = 0$</p></section>
     <section class="card step" hidden><h3>2️⃣ القانون</h3><p>ويكون حلها بالقانون:</p><div class="formula">$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$</div></section>
@@ -236,5 +237,6 @@ cur=Q.findIndex(q=>!answered(q));if(cur<0)cur=Q.length;
 renderHome();steps();renderQ();upd();show(LS.g('view')||'home');
 setTimeout(()=>$('loader').classList.add('off'),900);
 </script>
+  <script src="videos.js"></script>
 </body>
 </html>
