@@ -78,7 +78,7 @@ ${c.examples.map((x, i) => `<section class="card step"><h3>✏️ مثال ${i +
     let a = 0, r = 0;
     c.quiz.forEach((q, i) => { const v = FQ[sid + 'q' + i]; if (v !== undefined) { a++; if (v === q.c) r++; } });
     if (a < c.quiz.length) { el.innerHTML = ''; return; }
-    FD[sid] = r; sv('fnd', FD);
+    FD[sid] = r; sv('fnd', FD); upd();
     const pass = r >= 2, n = name ? 'يا ' + name.replace(/[&<>"]/g, '') : 'يا بطلة';
     el.innerHTML = `<div class="card pink"><div class="bow">${pass ? '🏆' : '🌷'}</div><h3>${pass ? 'برافو ' + n + '! أتقنتي المهارة' : 'مفيش مشكلة ' + n + ' 💗'}</h3><p>جاوبتي صح على ${r} من ${c.quiz.length}.</p>${pass
       ? `<button class="btn" data-a="next" data-id="${sid}">المهارة التالية ⬅️</button>`
@@ -130,20 +130,77 @@ ${c.examples.map((x, i) => `<section class="card step"><h3>✏️ مثال ${i +
     else if (a === 'next') next(id);
   });
 
+  let cls = '';
+  try { cls = localStorage.getItem('cls') || ''; } catch (e) {}
+  const tot = () => SECTIONS.reduce((a, s) => { const x = stat(s); return { n: a.n + x.n, d: a.d + x.d }; }, { n: 0, d: 0 });
+  const AV = '<svg viewBox="0 0 120 120" width="112" height="112" role="img" aria-label="صورة البنوتة"><clipPath id="avc"><circle cx="60" cy="60" r="58"/></clipPath><circle cx="60" cy="60" r="58" fill="#FCE8F0" stroke="#E9A9C2" stroke-width="3"/><g clip-path="url(#avc)" fill="#C77E9C"><circle cx="60" cy="50" r="20"/><circle cx="36" cy="40" r="9"/><circle cx="84" cy="40" r="9"/><path d="M18 125c2-30 20-42 42-42s40 12 42 42z"/></g><path d="M60 24l-15-9v18zM60 24l15-9v18z" fill="#fff" stroke="#E9A9C2" stroke-width="2"/></svg>';
+
+  const st2 = document.createElement('style');
+  st2.textContent = `#hubbar{position:fixed;bottom:0;left:0;right:0;z-index:30;display:flex;background:#fff;border-top:2px solid var(--s);box-shadow:0 -4px 16px rgba(199,126,156,.2);padding-bottom:env(safe-area-inset-bottom)}
+#hubbar button{flex:1;font:inherit;font-weight:800;border:0;background:none;color:var(--deep);padding:8px 4px;min-height:56px;cursor:pointer}
+#hubbar button.on{background:var(--s);box-shadow:inset 0 4px 0 var(--btn)}
+#hub,#found{padding-bottom:96px}.av{display:flex;justify-content:center;margin-bottom:6px}
+.chip{background:#fff;border:1.5px solid var(--p);padding:2px 14px;border-radius:20px;font-weight:800;color:var(--deep)}
+.stats{display:flex;gap:10px;justify-content:center;font-weight:800;margin:10px 0}.stats span{background:#fff3d6;color:#7a4e00;padding:2px 14px;border-radius:20px;direction:ltr}
+#clsIn{width:100%;font:inherit;font-size:1.1rem;padding:12px 16px;border:2px solid var(--p);border-radius:18px;text-align:center;background:#fff;color:var(--ink);margin-top:10px}`;
+  document.head.appendChild(st2);
+
+  const hub = document.createElement('main'); hub.id = 'hub'; hub.hidden = true; document.body.appendChild(hub);
+  const tabs = document.createElement('div'); tabs.id = 'hubbar'; tabs.hidden = true;
+  tabs.innerHTML = '<button data-t="hub">🏠 الرئيسية</button><button data-t="found">🌸 التأسيس</button>';
+  document.body.appendChild(tabs);
+
+  function renderHub() {
+    const t = tot();
+    hub.innerHTML = `<section class="card pink"><div class="av">${AV}</div><h2>${esc(name)}</h2><p><span class="chip">🎓 فصل ${cls}</span></p>
+<div class="stats"><span>🪙 ${coins}</span><span>⭐ ${t.d}</span></div>${bar(t.d, t.n)}<small>أتقنتي ${t.d} من ${t.n} مهارات متاحة</small>
+<button class="link" data-h="edit">تعديل بياناتي ✏️</button></section>
+<section class="card"><div class="bow">🌸</div><h3>تأسيس الرياضيات</h3><p>راجعي الأساسيات اللي بتفرق في أولى ثانوي، خطوة بخطوة.</p><button class="btn" data-h="found">ابدئي التأسيس</button></section>`;
+  }
+
   const _show = window.show;
+  const hideAll = () => { hub.hidden = root.hidden = tabs.hidden = true; };
   window.show = function (v) {
-    if (v === 'found') {
-      if (!name) { _show('home'); return; }
-      g('home').hidden = true; g('lessons').hidden = true; root.hidden = false;
-      LS.s('view', 'found'); render(); return;
+    if (v === 'lessons') v = 'hub';
+    if (v === 'hub' || v === 'found') {
+      if (!name) { hideAll(); _show('home'); g('nameWarn').textContent = 'اكتبي اسمك وفصلك الأول علشان نبدأ 💗'; return; }
+      if (!cls) { editing = true; window.renderHome(); hideAll(); _show('home'); g('nameWarn').textContent = 'اكتبي فصلك علشان نكمل 💗'; return; }
+      g('home').hidden = true; g('lessons').hidden = true;
+      hub.hidden = v !== 'hub'; root.hidden = v !== 'found'; tabs.hidden = false;
+      tabs.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.t === v));
+      LS.s('view', v);
+      if (v === 'hub') { renderHub(); window.scrollTo(0, 0); } else render();
+      return;
     }
-    root.hidden = true; _show(v);
+    hideAll(); _show(v);
   };
 
-  const nav = document.querySelector('header nav');
-  if (nav) nav.insertAdjacentHTML('beforeend', `<button class="nb" onclick="show('found')">التأسيس 🌸</button>`);
-  const grid = document.querySelector('#home .grid');
-  if (grid) grid.insertAdjacentHTML('beforebegin', `<section class="card pink"><div class="bow">🌸</div><h2>تأسيس الرياضيات</h2><p>راجعي الأساسيات اللي بتفرق في أولى ثانوي، خطوة بخطوة.</p><button class="btn" onclick="show('found')">ابدئي التأسيس</button></section>`);
-  if (LS.g('view') === 'found') window.show('found');
+  tabs.addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (b) window.show(b.dataset.t); });
+  hub.addEventListener('click', e => {
+    const b = e.target.closest('[data-h]'); if (!b) return;
+    if (b.dataset.h === 'found') window.show('found');
+    else { editing = true; window.renderHome(); window.show('home'); }
+  });
+
+  const _rh = window.renderHome;
+  window.renderHome = function () { _rh(); const c = g('clsIn'); if (c) c.value = editing ? cls : ''; };
+  const _sn = window.saveName;
+  window.saveName = function () {
+    if (!g('nameIn').value.trim()) return _sn();
+    const c = g('clsIn').value.trim().replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/\s+/g, '').replace(/[\\\-]/g, '/');
+    if (!/^\d{1,2}\/\d{1,2}$/.test(c)) { g('nameWarn').textContent = 'اكتبي فصلك بالشكل ده: 1/10 💗'; g('clsIn').focus(); return; }
+    cls = c; try { localStorage.setItem('cls', c); } catch (e) {}
+    _sn();
+  };
+  const _upd = window.upd;
+  window.upd = function () { _upd(); g('starCount').textContent = tot().d; };
+  if (typeof send === 'function') { const _send = send; window.send = (ev, d) => _send(ev, (d ? d + ' | ' : '') + 'الفصل ' + cls); }
+
+  g('nameCard').querySelector('p').textContent = 'اكتبي اسمك وفصلك علشان نبدأ رحلتنا مع بعض!';
+  g('nameIn').insertAdjacentHTML('afterend', `<input id="clsIn" maxlength="6" placeholder="فصلك (مثلاً 1/10)" aria-label="فصلك" autocomplete="off" onkeydown="if(event.key==='Enter')saveName()">`);
+  const nav = document.querySelector('header nav'); if (nav) nav.remove();
+  window.upd(); window.renderHome();
+  const lv = LS.g('view');
+  if (lv === 'found') window.show('found'); else if (lv === 'hub' || lv === 'lessons') window.show('hub');
 })();
     
