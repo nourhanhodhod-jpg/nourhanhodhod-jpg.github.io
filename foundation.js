@@ -142,6 +142,16 @@ ${c.examples.map((x, i) => `<section class="card step"><h3>✏️ مثال ${i +
 #hub,#found{padding-bottom:96px}.av{display:flex;justify-content:center;margin-bottom:6px}
 .chip{background:#fff;border:1.5px solid var(--p);padding:2px 14px;border-radius:20px;font-weight:800;color:var(--deep)}
 .stats{display:flex;gap:10px;justify-content:center;font-weight:800;margin:10px 0}.stats span{background:#fff3d6;color:#7a4e00;padding:2px 14px;border-radius:20px;direction:ltr}
+#hub .card{text-align:right}.hubcard{position:relative;padding-top:26px}
+.hubhero{display:flex;align-items:center;gap:14px}.hubhero .av{margin:0;flex:none}.hubhero svg{width:84px;height:84px}
+.hubhero h2{margin:0;font-size:1.5rem}.hubhero .chip{display:inline-block;margin-top:4px}
+.editb{position:absolute;top:10px;left:10px;font:inherit;font-size:.85rem;font-weight:700;border:1.5px solid var(--p);background:#fff;color:var(--deep);border-radius:20px;padding:2px 12px;min-height:34px;cursor:pointer}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 12px}
+.tile{background:#fff;border:1.5px solid var(--p);border-radius:18px;padding:10px 4px;text-align:center}
+.tile b{display:block;font-size:1.35rem;color:var(--deep);line-height:1.4}.tile small{display:block;font-size:.78rem;line-height:1.4}
+.cta{background:linear-gradient(135deg,#fff,var(--s));border:2px solid var(--p)}
+.cthead{display:flex;gap:12px;align-items:center}.bigic{font-size:2.4rem}.cthead h3{margin:0}.cthead p{margin:0}
+.btn.wide{display:block;width:100%;margin-top:14px}
 #clsIn{width:100%;font:inherit;font-size:1.1rem;padding:12px 16px;border:2px solid var(--p);border-radius:18px;text-align:center;background:#fff;color:var(--ink);margin-top:10px}`;
   document.head.appendChild(st2);
 
@@ -151,11 +161,12 @@ ${c.examples.map((x, i) => `<section class="card step"><h3>✏️ مثال ${i +
   document.body.appendChild(tabs);
 
   function renderHub() {
-    const t = tot();
-    hub.innerHTML = `<section class="card pink"><div class="av">${AV}</div><h2>${esc(name)}</h2><p><span class="chip">🎓 فصل ${cls}</span></p>
-<div class="stats"><span>🪙 ${coins}</span><span>⭐ ${t.d}</span></div>${bar(t.d, t.n)}<small>أتقنتي ${t.d} من ${t.n} مهارات متاحة</small>
-<button class="link" data-h="edit">تعديل بياناتي ✏️</button></section>
-<section class="card"><div class="bow">🌸</div><h3>تأسيس الرياضيات</h3><p>راجعي الأساسيات اللي بتفرق في أولى ثانوي، خطوة بخطوة.</p><button class="btn" data-h="found">ابدئي التأسيس</button></section>`;
+    const t = tot(), p = pct(t.d, t.n);
+    hub.innerHTML = `<section class="card pink hubcard"><button class="editb" data-h="edit">✏️ تعديل</button>
+<div class="hubhero"><div class="av">${AV}</div><div><small>أهلاً بيكي 🎀</small><h2>${esc(name)}</h2><span class="chip">🎓 فصل ${cls}</span></div></div>
+<div class="tiles"><div class="tile"><b>🪙 ${coins}</b><small>عملاتي</small></div><div class="tile"><b>⭐ ${t.d}</b><small>مهارات أتقنتيها</small></div><div class="tile"><b>${p}%</b><small>تقدمي</small></div></div>
+${bar(t.d, t.n)}<small>أتقنتي ${t.d} من ${t.n} مهارات متاحة</small></section>
+<section class="card cta"><div class="cthead"><span class="bigic">🌸</span><div><h3>تأسيس الرياضيات</h3><p>راجعي الأساسيات اللي بتفرق في أولى ثانوي، خطوة بخطوة.</p></div></div><button class="btn wide" data-h="found">${t.d ? 'كمّلي التأسيس' : 'ابدئي التأسيس'} ⬅️</button></section>`;
   }
 
   const _show = window.show;
@@ -166,13 +177,13 @@ ${c.examples.map((x, i) => `<section class="card step"><h3>✏️ مثال ${i +
       if (!name) { hideAll(); _show('home'); g('nameWarn').textContent = 'اكتبي اسمك وفصلك الأول علشان نبدأ 💗'; return; }
       if (!cls) { editing = true; window.renderHome(); hideAll(); _show('home'); g('nameWarn').textContent = 'اكتبي فصلك علشان نكمل 💗'; return; }
       g('home').hidden = true; g('lessons').hidden = true;
-      hub.hidden = v !== 'hub'; root.hidden = v !== 'found'; tabs.hidden = false;
+      hub.hidden = v !== 'hub'; root.hidden = v !== 'found'; tabs.hidden = false; g('coins').hidden = v === 'hub';
       tabs.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.t === v));
       LS.s('view', v);
       if (v === 'hub') { renderHub(); window.scrollTo(0, 0); } else render();
       return;
     }
-    hideAll(); _show(v);
+    hideAll(); g('coins').hidden = false; _show(v);
   };
 
   tabs.addEventListener('click', e => { const b = e.target.closest('[data-t]'); if (b) window.show(b.dataset.t); });
@@ -203,4 +214,4 @@ ${c.examples.map((x, i) => `<section class="card step"><h3>✏️ مثال ${i +
   const lv = LS.g('view');
   if (lv === 'found') window.show('found'); else if (lv === 'hub' || lv === 'lessons') window.show('hub');
 })();
-    
+                                    
