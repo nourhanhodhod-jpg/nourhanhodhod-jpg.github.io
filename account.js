@@ -25,7 +25,7 @@ const FIREBASE_CONFIG = {
   };
   const V = 'https://www.gstatic.com/firebasejs/10.12.2/';
   const load = u => new Promise((ok, no) => { const s = document.createElement('script'); s.src = u; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
-  const KEYS = ['coins', 'done', 'fnd', 'fq', 'fc'], WIPE = KEYS.concat(['name', 'cls', 'view', 'uid']);
+  const KEYS = ['coins', 'done', 'fnd', 'fq', 'fc', 'fx'], WIPE = KEYS.concat(['name', 'cls', 'view', 'uid']);
   let auth, db, uid = null, busy = false, mode = 'new', last = '';
 
   const css = document.createElement('style');
@@ -42,7 +42,7 @@ const FIREBASE_CONFIG = {
     try {
       localStorage.setItem('name', d.name || ''); localStorage.setItem('cls', d.cls || '');
       localStorage.setItem('coins', String(d.coins || 0));
-      ['done', 'fnd', 'fq', 'fc'].forEach(k => localStorage.setItem(k, d[k] || '{}'));
+      ['done', 'fnd', 'fq', 'fc', 'fx'].forEach(k => localStorage.setItem(k, d[k] || '{}'));
     } catch (e) {}
   };
 
@@ -51,7 +51,7 @@ const FIREBASE_CONFIG = {
     const s = {}; KEYS.concat(['name', 'cls']).forEach(k => { s[k] = localStorage.getItem(k) || ''; });
     const j = JSON.stringify(s); if (j === last) return; last = j;
     let sk = 0; try { sk = Object.values(JSON.parse(s.fnd || '{}')).filter(v => v >= 2).length; } catch (e) {}
-    db.collection('users').doc(uid).set({ name: s.name, cls: s.cls, coins: parseInt(s.coins) || 0, skills: sk, done: s.done, fnd: s.fnd, fq: s.fq, fc: s.fc, updated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(() => { last = ''; });
+    db.collection('users').doc(uid).set({ name: s.name, cls: s.cls, coins: parseInt(s.coins) || 0, skills: sk, done: s.done, fnd: s.fnd, fq: s.fq, fc: s.fc, fx: s.fx, updated: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(() => { last = ''; });
   }
 
   function ui() {
@@ -90,7 +90,7 @@ const FIREBASE_CONFIG = {
       if (mode === 'new') {
         const r = await auth.createUserWithEmailAndPassword(em, pw);
         uid = r.user.uid;
-        await db.collection('users').doc(uid).set({ name: name, cls: cls, coins: 0, skills: 0, done: '{}', fnd: '{}', fq: '{}', fc: '{}', created: firebase.firestore.FieldValue.serverTimestamp() });
+        await db.collection('users').doc(uid).set({ name: name, cls: cls, coins: 0, skills: 0, done: '{}', fnd: '{}', fq: '{}', fc: '{}', fx: '{}', created: firebase.firestore.FieldValue.serverTimestamp() });
         fill({ name: name, cls: cls });
       } else {
         const r = await auth.signInWithEmailAndPassword(em, pw);
@@ -130,4 +130,4 @@ const FIREBASE_CONFIG = {
     });
   })();
 })();
-         
+       
