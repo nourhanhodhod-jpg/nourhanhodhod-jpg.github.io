@@ -14,6 +14,15 @@ const FIREBASE_CONFIG = {
 (function () {
   if (!FIREBASE_CONFIG.apiKey || FIREBASE_CONFIG.apiKey.indexOf('ضعي') === 0) return;
   const g = id => document.getElementById(id);
+  if (/[?&]reset/.test(location.search)) history.replaceState(null, '', location.pathname);
+  const rel = () => {
+    try {
+      const now = Date.now(), c = now - (+sessionStorage.getItem('rt') || 0) < 15000 ? (+sessionStorage.getItem('rl') || 0) + 1 : 1;
+      sessionStorage.setItem('rl', c); sessionStorage.setItem('rt', now);
+      if (c > 3) return;
+    } catch (e) {}
+    location.reload();
+  };
   const V = 'https://www.gstatic.com/firebasejs/10.12.2/';
   const load = u => new Promise((ok, no) => { const s = document.createElement('script'); s.src = u; s.onload = ok; s.onerror = no; document.head.appendChild(s); });
   const KEYS = ['coins', 'done', 'fnd', 'fq', 'fc'], WIPE = KEYS.concat(['name', 'cls', 'view', 'uid']);
@@ -54,7 +63,7 @@ const FIREBASE_CONFIG = {
     g('mNew').onclick = () => set('new'); g('mLog').onclick = () => set('log'); set('new');
     const lo = document.createElement('button');
     lo.className = 'ib'; lo.id = 'logout'; lo.textContent = '🚪'; lo.setAttribute('aria-label', 'تسجيل الخروج'); lo.hidden = true;
-    lo.onclick = () => { if (!confirm('تسجيل الخروج؟')) return; push(); auth.signOut().then(() => { wipe(); location.reload(); }); };
+    lo.onclick = () => { if (!confirm('تسجيل الخروج؟')) return; push(); auth.signOut().then(() => { wipe(); rel(); }); };
     document.querySelector('header .tools').appendChild(lo);
   }
 
@@ -90,7 +99,7 @@ const FIREBASE_CONFIG = {
         fill(d.exists ? d.data() : { name: name, cls: cls });
       }
       localStorage.setItem('uid', uid); localStorage.setItem('view', 'hub');
-      location.reload();
+      rel();
     } catch (e) {
       busy = false; btn.disabled = false;
       w.textContent = MSG[e.code] || 'حصلت مشكلة بسيطة، جرّبي تاني 💗';
@@ -109,7 +118,7 @@ const FIREBASE_CONFIG = {
       if (u) {
         uid = u.uid;
         if (localStorage.getItem('uid') !== uid) {
-          try { const d = await db.collection('users').doc(uid).get(); if (d.exists) fill(d.data()); localStorage.setItem('uid', uid); location.reload(); } catch (e) {}
+          try { const d = await db.collection('users').doc(uid).get(); if (d.exists) fill(d.data()); localStorage.setItem('uid', uid); rel(); } catch (e) {}
           return;
         }
         g('logout').hidden = false;
@@ -117,8 +126,8 @@ const FIREBASE_CONFIG = {
         addEventListener('pagehide', push);
         document.addEventListener('visibilitychange', () => { if (document.hidden) push(); });
         const _u = window.upd; window.upd = function () { _u(); push(); };
-      } else if (localStorage.getItem('name') || localStorage.getItem('uid')) { wipe(); location.reload(); }
+      } else if (localStorage.getItem('name') || localStorage.getItem('uid')) { wipe(); rel(); }
     });
   })();
 })();
-    
+         
