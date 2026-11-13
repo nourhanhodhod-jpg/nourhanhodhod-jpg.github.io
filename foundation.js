@@ -6,7 +6,7 @@
   let FD = ld('fnd'), FQ = ld('fq'), FC = ld('fc'), sec = null, sk = null;
   const nm = () => name ? 'يا ' + name : 'يا بطلة';
   const skl = s => s.skills.map((t, i) => ({ id: s.id + 'k' + (i + 1), title: t }));
-  const has = id => !!CONTENT[id];
+  const has = id => !!CONTENT[id] || !!(window.SKILL_PAGES && SKILL_PAGES[id]);
   const ok = id => (FD[id] || 0) >= 2;
   const stat = s => { const a = skl(s).filter(k => has(k.id)); return { n: a.length, d: a.filter(k => ok(k.id)).length }; };
   const pct = (d, n) => n ? Math.round(d / n * 100) : 0;
@@ -111,8 +111,24 @@ ${c.examples.map((x, i) => `<section class="card step"><h3>✏️ مثال ${i +
     render();
   }
 
+  /* واجهة بسيطة للمهارات اللي ليها صفحة خاصة (زي s1k1) */
+  const api = {
+    get: k => FQ[k] || null,
+    set: (k, v) => { FQ[k] = v; sv('fq', FQ); },
+    nm,
+    mastered: id => ok(id),
+    done: (id, score, pass) => { if (pass) FD[id] = score; else if (!ok(id)) FD[id] = 1; sv('fnd', FD); upd(); },
+    coin: key => { if (!FC[key]) { FC[key] = 1; sv('fc', FC); coins += 5; LS.s('coins', coins); upd(); celebrate(); } },
+    wrong: () => wrongEffect(),
+    go: (a, id) => {
+      if (a === 'home') { sec = sk = null; render(); }
+      else if (a === 'sec') { sec = SECTIONS.find(s => id.startsWith(s.id + 'k')); sk = null; render(); }
+      else if (a === 'next') next(id);
+    }
+  };
+
   function render() {
-    if (sk) skillPage(sk); else if (sec) skillsView(sec); else homeView();
+    if (sk && window.SKILL_PAGES && SKILL_PAGES[sk]) SKILL_PAGES[sk](root, api); else if (sk) skillPage(sk); else if (sec) skillsView(sec); else homeView();
     rm(root);
     window.scrollTo(0, 0);
   }
