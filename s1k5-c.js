@@ -1,0 +1,100 @@
+/* 🌸 مراحل: شوفي الحل / جربي بنفسك / اختبري نفسك / الملخص (مهارة الكسور) */
+(function () {
+  const { dig, fmt } = FR, PG = AL.pg, ID = AL.SKILL_ID, S3 = S5;
+  const css = document.createElement('style');
+  css.textContent = `.res3{background:#dff3e4;border:2px solid #2e8b57;border-radius:16px;padding:6px 14px;text-align:center;font-size:1.3rem;font-weight:800;color:#14532d;margin:10px 0}.sc3{font-size:1.4rem;font-weight:800;color:var(--deep)}
+.miss{background:#fff8f2;border:2px solid var(--p);border-radius:16px;padding:8px 14px;margin:10px 0}.miss p{margin:4px 0}.warn{background:#fff3d6;border:2px dashed #e0a526;border-radius:16px;padding:6px 16px;margin:10px 0}`;
+  document.head.appendChild(css);
+  const ansHtml = a => fmt(a);
+
+  /* ---------- ثالثًا: شوفي الحل ---------- */
+  PG.ex = (c, x) => {
+    const EX = S3.examples, S = x.P.ex; S.cur = S.cur || 0; S.d = S.d || {};
+    const box = document.createElement('div'); c.appendChild(box);
+    const paint = () => {
+      const i = S.cur, e = EX[i], n = S.d[i] || 0, fin = k => (S.d[k] || 0) >= EX[k].steps.length;
+      box.innerHTML = `<section class="card"><h3>✏️ أمثلة محلولة خطوة بخطوة</h3><p>اختاري مثال واضغطي «الخطوة التالية» لحد ما الحل يكتمل. كل خطوة معاها سبب.</p><div class="tabs">${EX.map((_, k) => `<button class="sm${k === i ? ' on' : ''}" data-t="${k}" aria-label="مثال ${dig(k + 1)}">${fin(k) ? '✅' : dig(k + 1)}</button>`).join('')}</div></section>
+<section class="card step"><h3>مثال ${dig(i + 1)} من ${dig(EX.length)}</h3><p class="qt">${fmt(e.t)}</p><ol class="stps">${e.steps.slice(0, n).map(s => `<li>${fmt(s)}</li>`).join('')}</ol>
+${n >= e.steps.length && e.warn ? `<div class="warn">⚠️ ${fmt(e.warn)}</div>` : ''}${n >= e.steps.length ? `<div class="res3">✅ الناتج النهائي: ${ansHtml(e.ans)}</div>${i < EX.length - 1 ? '<button class="btn" data-nx>المثال التالي ⬅️</button>' : '<p>🎉 خلصتي كل الأمثلة! كمّلي للتدريب.</p>'}` : '<button class="btn" data-stp>الخطوة التالية ⬇️</button>'}</section>`;
+      box.querySelectorAll('[data-t]').forEach(b => b.onclick = () => { S.cur = +b.dataset.t; x.save(); paint(); });
+      const s = box.querySelector('[data-stp]'); if (s) s.onclick = () => { S.d[i] = n + 1; x.save(); paint(); };
+      const nx = box.querySelector('[data-nx]'); if (nx) nx.onclick = () => { S.cur = i + 1; x.save(); paint(); window.scrollTo(0, 0); };
+    };
+    paint();
+  };
+
+  /* ---------- رابعًا: جربي بنفسك ---------- */
+  const LV = { 1: ['المستوى الأول: سهل', 'أسئلة على المفاهيم الأساسية.'], 2: ['المستوى الثاني: متوسط', 'القوى والمتطابقات الجبرية.'], 3: ['المستوى الثالث: متقدم', 'عمليات مركبة ومسائل لفظية وتفكير.'] };
+  const prac = lv => (c, x) => {
+    const qs = S3.practice.filter(q => q.lv === lv), key = 'l' + lv, A = x.P.ans, N = qs.length;
+    const right = () => qs.filter(q => A[q.id] && A[q.id].r).length, answered = () => qs.filter(q => A[q.id]).length;
+    if (x.P.pi[key] === undefined) { const f = qs.findIndex(q => !A[q.id]); x.P.pi[key] = f < 0 ? N : f; }
+    const box = document.createElement('div'); c.appendChild(box);
+    const paint = () => {
+      const i = x.P.pi[key], ans = answered();
+      box.innerHTML = `<section class="card pink"><h3>🎮 ${LV[lv][0]}</h3><p>${LV[lv][1]} (فيه تلميح 💡 قبل ما تجاوبي)</p><div class="bar"><i style="width:${ans / N * 100}%"></i></div><small>أجبتي على ${dig(ans)} من ${dig(N)} · صح: ${dig(right())}</small></section><div id="qb"></div>`;
+      const qb = box.querySelector('#qb');
+      if (i >= N) {
+        const p = Math.round(right() / N * 100);
+        qb.innerHTML = `<section class="card pink"><div class="bow">${p >= 80 ? '🏆' : '🌷'}</div><h3>خلصتي المستوى!</h3><p class="sc3">${dig(right())} من ${dig(N)}</p><p>${p >= 80 ? 'ممتاز! إنتي فاهمة القوى والمتطابقات كويس 💗' : p >= 50 ? 'كويس! راجعي الأسئلة اللي غلطتي فيها وشوفي التفسير.' : 'مفيش مشكلة، ارجعي لصفحات الشرح وجرّبي تاني 💗'}</p><button class="sm" data-rv>راجعي الأسئلة 🔄</button></section>`;
+        qb.querySelector('[data-rv]').onclick = () => { x.P.pi[key] = 0; x.save(); paint(); }; return;
+      }
+      x.ask(qb, qs[i], { head: 'سؤال ' + dig(i + 1) + ' من ' + dig(N), after: () => { nav(); } });
+      nav();
+    };
+    const nav = () => {
+      const i = x.P.pi[key], q = qs[i]; box.querySelectorAll('.pnav').forEach(e => e.remove());
+      const d = document.createElement('div'); d.className = 'inrow pnav';
+      d.innerHTML = `${i > 0 ? '<button class="sm" data-pp>➡️ السؤال السابق</button>' : ''}${A[q.id] ? `<button class="btn" data-pn>${i < N - 1 ? 'السؤال التالي ⬅️' : 'شوفي النتيجة 🌟'}</button>` : ''}`;
+      box.querySelector('#qb').appendChild(d);
+      const pp = d.querySelector('[data-pp]'), pn = d.querySelector('[data-pn]');
+      if (pp) pp.onclick = () => { x.P.pi[key] = i - 1; x.save(); paint(); };
+      if (pn) pn.onclick = () => { x.P.pi[key] = i + 1; x.save(); paint(); window.scrollTo(0, 0); };
+    };
+    paint();
+  };
+  PG.pr1 = prac(1); PG.pr2 = prac(2); PG.pr3 = prac(3);
+
+  /* ---------- خامسًا: اختبري نفسك ---------- */
+  const TOP = { concept: ['مفهوم القوة', 'r1', 'الأس بيقول الأساس اتكرر ضربه كام مرة، ومش بنضرب الأساس في الأس.'], mulp: ['ضرب القوى', 'l1', 'لو الأساس واحد نجمع الأسس ولا نضربها ولا نجمع الأساسات.'], divp: ['قسمة القوى', 'l2', 'لو الأساس واحد نطرح أس المقام من أس البسط.'], powp: ['الأس السالب وقوة القوة', 'r4', 'الأس السالب معناه المقلوب، وفي قوة القوة بنضرب الأسين.'], dist: ['فك الأقواس', 'l7', 'اضربي الحد اللي برّا القوس في كل الحدود جوّاه بإشاراتها.'], sq1: ['مربع المجموع', 'l8', 'مربع الأول + ضعف حاصل ضرب الحدين + مربع التاني، ولا تنسي الحد الأوسط.'], sq2: ['مربع الفرق', 'l9', 'الحد الأوسط سالب والحد الأخير موجب دايمًا.'], mul2: ['ضرب قوسين', 'l10', 'اضربي كل حد في كل حد ثم اجمعي الحدود المتشابهة.'], conj: ['القوسين المترافقين', 'l11', 'نفس الحدين وإشارتين مختلفتين: الناتج {{أ^2 - ب^2}} من غير حد أوسط.'], mix: ['تبسيط المقادير', 'l13', 'فكي كل جزء بالقانون المناسب ثم اجمعي المتشابهة بحذر مع إشارة الطرح.'] };
+  const parseA = a => { const p = String(a).split(' '); let w = 0, n = 0, d = 1; if (p.length === 2) { w = +p[0]; [n, d] = p[1].split('/').map(Number); } else if (p[0].includes('/')) { [n, d] = p[0].split('/').map(Number); } else w = +p[0]; return [w, n, d]; };
+  const disp = (q, a) => q.type === 'mcq' ? fmt(q.o[a]) : q.type === 'int5' ? fmt('{{' + AL.nrm(a) + '}}') : q.type === 'poly' ? AL.F(AL.polyStr(a.map(Number), q.pw, q.v)) : q.type === 'frac' ? fmt('{{' + ((+a.w ? a.w + '~' : '') + ((+a.n && +a.d) ? a.n + '/' + a.d : '') || '0').replace(/~$/, '') + '}}') : '';
+  const corr = q => q.type === 'mcq' ? fmt(q.o[q.c]) : q.type === 'int5' ? fmt('{{' + q.a + '}}') : q.type === 'poly' ? AL.F(AL.polyStr(q.a, q.pw, q.v)) : fmt('{{' + q.a.replace(' ', '~') + '}}');
+  PG.quiz = (c, x) => {
+    const Q = S3.quiz, A = x.P.ans, box = document.createElement('div'); c.appendChild(box);
+    let i = Q.findIndex(q => !A[q.id]); if (i < 0) i = Q.length;
+    const paint = () => {
+      box.innerHTML = ''; if (i >= Q.length) return results(); x.gate(false);
+      const done = Q.filter(q => A[q.id]).length;
+      box.insertAdjacentHTML('beforeend', `<section class="card pink"><h3>🧠 اختبري نفسك</h3><p>١٠ أسئلة متنوعة من كل أجزاء المهارة، سؤال في كل مرة. الإجابة الصحيحة والتفسير بيظهروا بعد ما تجاوبي.</p><div class="bar"><i style="width:${done / Q.length * 100}%"></i></div><small>سؤال ${dig(i + 1)} من ${dig(Q.length)}</small></section>`);
+      const q = Q[i]; x.ask(box, q, { nohint: true, after: (a, r) => { if (r) x.api.coin(ID + q.id); else x.api.wrong(); nx(); } });
+    };
+    const nx = () => {
+      const b = document.createElement('button'); b.className = 'btn'; b.textContent = i < Q.length - 1 ? 'السؤال التالي ⬅️' : 'شوفي نتيجتك 🌟';
+      b.onclick = () => { i++; paint(); window.scrollTo(0, 0); }; box.appendChild(b); b.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+    };
+    const results = () => {
+      const sc = Q.filter(q => A[q.id] && A[q.id].r).length, wrong = Q.filter(q => !A[q.id].r), pass = sc >= 7, nm = x.api.nm();
+      x.api.done(ID, sc, pass); x.gate(true);
+      const msg = sc === 10 ? 'ممتاز جدًا! درجة كاملة 🌟' : sc >= 7 ? 'أداء رائع! إنتي متقنة المهارة 💗' : sc >= 4 ? 'محاولة كويسة! راجعي النقاط الضعيفة وجرّبي تاني، وهتتحسني بسرعة 🌷' : 'مفيش مشكلة خالص، ده معناه إننا محتاجين نراجع الأساس سوا. ارجعي للشرح وجرّبي تاني 💪';
+      box.innerHTML = `<section class="card pink"><div class="bow">${pass ? '🏆' : '🌷'}</div><h3>${pass ? 'برافو ' + nm + '! أتقنتي المهارة' : 'مفيش مشكلة ' + nm + ' 💗'}</h3><p class="sc3">${dig(sc)} من ${dig(Q.length)}</p><p>✅ إجابات صحيحة: ${dig(sc)} · ❌ إجابات خاطئة: ${dig(wrong.length)} · النسبة: ${dig(Math.round(sc / Q.length * 100))}٪</p><p>${msg}</p><p>${pass ? 'عدّيتي الاختبار (٧ من ١٠) ✅' : 'محتاجة ٧ من ١٠ عشان نعتبر المهارة متقنة.'}</p></section>`
+        + (wrong.length ? '<section class="card"><h3>📚 الأسئلة اللي محتاجة مراجعة</h3>' + wrong.map(q => `<div class="miss"><p><b>${fmt(q.t)}</b></p><p>إجابتك: ${disp(q, A[q.id].a)}</p><p>الإجابة الصحيحة: ${corr(q)}</p><p>${fmt(q.w)}</p><p>💡 سبب الخطأ المحتمل: ${fmt(AL.D(TOP[q.topic][2]))}</p></div>`).join('') + `<p>ارجعي للدروس دي:</p><div class="tabs">${[...new Set(wrong.map(q => q.topic))].map(t => `<button class="sm" data-g="${TOP[t][1]}">${TOP[t][0]} ⬅️</button>`).join('')}</div></section>` : '<section class="card"><p>مفيش أي نقطة ضعف ظاهرة، شغل ممتاز 🎀</p></section>')
+        + '<button class="btn" data-rt>إعادة الاختبار 🔄</button>';
+      box.querySelectorAll('[data-g]').forEach(b => b.onclick = () => x.go(b.dataset.g));
+      box.querySelector('[data-rt]').onclick = () => { Q.forEach(q => delete A[q.id]); x.save(); i = 0; paint(); window.scrollTo(0, 0); };
+    };
+    paint();
+  };
+
+  /* ---------- سادسًا: ملخص المعلومة ---------- */
+  PG.sum = (c, x) => {
+    const ok = x.api.mastered(ID), R = AL.deep([['🔢 القوة والأس', '{{2^3 = 2 × 2 × 2 = 8}}: الأساس {{2}} والأس {{3}} (عدد مرات تكرار الضرب).'], ['✖️ ضرب قوتين لهما نفس الأساس', '{{أ^ن × أ^م = أ^[ن+م]}}'], ['➗ قسمة قوتين لهما نفس الأساس', '{{أ^ن ÷ أ^م = أ^[ن-م]}} بشرط {{أ ≠ 0}}'], ['🔁 قوة القوة', '{{(أ^ن)^م = أ^[ن×م]}}'], ['🔗 قوة حاصل الضرب', '{{(أ × ب)^ن = أ^ن × ب^ن}}'], ['➗ قوة حاصل القسمة', '{{(⟦أ|ب⟧)^ن = ⟦أ^ن|ب^ن⟧}} بشرط {{ب ≠ 0}}'], ['⭕ الأس صفر', '{{أ^0 = 1}} بشرط {{أ ≠ 0}}'], ['🔄 الأس السالب', '{{أ^-ن = ⟦1|أ^ن⟧}} بشرط {{أ ≠ 0}}'], ['🥡 خاصية التوزيع', '{{أ(ب + ج) = أب + أج}}'], ['🟪 مربع مجموع حدين', '{{(أ + ب)^2 = أ^2 + 2أب + ب^2}}'], ['🟦 مربع الفرق بين حدين', '{{(أ - ب)^2 = أ^2 - 2أب + ب^2}}'], ['🪞 القوسين المترافقين', '{{(أ + ب)(أ - ب) = أ^2 - ب^2}}'], ['✂️ الفرق بين مربعين', '{{أ^2 - ب^2 = (أ + ب)(أ - ب)}}'], ['✖️ ضرب قوسين عامين', '{{(أ + ب)(ج + د) = أج + أد + بج + بد}}']]);
+    c.insertAdjacentHTML('beforeend', `<section class="card pink"><div class="bow">🎀</div><h3>ملخص المعلومة: قبل ما تمشي</h3></section>${R.map(r => `<section class="card"><h3>${r[0]}</h3><p>${fmt(r[1])}</p></section>`).join('')}
+<section class="warn"><h3>⚠️ أشهر الأخطاء</h3><ul class="pts"><li>الخلط بين ٢³ و٢ × ٣.</li><li>جمع الأساسات بدلًا من الأسس.</li><li>نسيان ضرب الأسس في قوة القوة.</li><li>الاعتقاد إن الأس السالب يجعل الناتج سالبًا.</li><li>نسيان ضرب الحد اللي برّا القوس في كل الحدود جوّاه.</li><li>نسيان الحد الأوسط في مربع مجموع حدين.</li><li>جعل الحد الأخير سالبًا في مربع الفرق بين حدين.</li><li>الاعتقاد إن (أ + ب)² = أ² + ب².</li><li>نسيان تجميع الحدود المتشابهة بعد ضرب القوسين.</li><li>تطبيق قاعدة المترافقين على قوسين غير مترافقين.</li></ul></section>
+<section class="card ${ok ? 'pink' : ''}"><h3>${ok ? '✅ أتقنتي المهارة!' : '🎯 لسه فاضل الاختبار'}</h3><p>${ok ? 'مهارتك اتسجلت، وتقدري تكملي للمهارة اللي بعدها.' : 'عدّي الاختبار النهائي بـ ٧ من ١٠ عشان نسجّل المهارة ✅'}</p>${ok ? '<button class="btn" data-nx>المهارة التالية ⬅️</button>' : '<button class="btn" data-q>روحي للاختبار 🧠</button>'}<button class="link" data-bk>رجوع لقائمة المهارات</button></section>`);
+    const n = c.querySelector('[data-nx]'), q = c.querySelector('[data-q]');
+    if (n) n.onclick = () => x.api.go('next', ID); if (q) q.onclick = () => x.go('quiz');
+    c.querySelector('[data-bk]').onclick = () => x.api.go('sec', ID);
+  };
+})();
+    
