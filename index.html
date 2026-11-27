@@ -70,6 +70,7 @@ main{max-width:720px;margin:0 auto;padding:12px 16px 40px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (min-width:600px){.hero h1{font-size:2.1rem}.opts{grid-template-columns:1fr 1fr}}
 </style>
+<link rel="stylesheet" href="theme.css?v=1">
 </head>
 <body>
 <div id="loader"><span>🎀</span></div>
@@ -88,11 +89,7 @@ main{max-width:720px;margin:0 auto;padding:12px 16px 40px}
 </header>
 
 <main id="home">
-  <section class="hero">
-    <span class="fl f1">⭐</span><span class="fl f2">💗</span>
-    <h1>أهلاً بيك في عالم الرياضيات! 🎀</h1>
-    <p>هنا هنتعلم خطوة بخطوة، ونكتشف إن الرياضيات أسهل مما تتخيل.</p>
-  </section>
+  <section class="hero"><h1 id="heroTitle">أهلاً بيك في عالم الرياضيات! 🎀</h1><p>خطوة بخطوة، والرياضيات هتبقى أسهل.</p></section>
   <section class="card pink" id="nameCard">
     <div class="bow">🎀</div>
     <h2>بس الأول.. نعرف اسمك إيه؟ 💗</h2>
@@ -107,11 +104,13 @@ main{max-width:720px;margin:0 auto;padding:12px 16px 40px}
     <button class="btn" onclick="show('lessons')">يلا نبدأ المذاكرة</button>
     <button class="link" onclick="editName()">تعديل الاسم ✏️</button>
   </section>
-  <section class="grid">
-    <div class="card"><span>📖</span>شرح مبسط</div>
-    <div class="card"><span>✏️</span>أمثلة محلولة</div>
-    <div class="card"><span>🎮</span>تدريبات تفاعلية</div>
-    <div class="card"><span>📈</span>متابعة التقدم</div>
+  <section class="bento" aria-label="لوحة التقدم">
+    <div class="bt t-wide"><span class="bem">🎀</span><h3>رحلة التأسيس</h3><div><div class="bn" style="direction:rtl" id="dWide">ابدئي أول مهارة</div><button class="btn" onclick="show('lessons')">كمّلي المذاكرة ✨</button></div></div>
+    <div class="bt t-prog"><h3>مهارات أتقنتيها</h3><div class="bring" id="dRing"><b id="dRingTxt">0%</b></div><small id="dProg">٠ من ٠</small></div>
+    <div class="bt t-coin"><span class="bem">🪙</span><h3>العملات</h3><div class="bn" id="dCoins">0</div><small>كل إجابة صح بتكسّبك</small></div>
+    <div class="bt t-star"><span class="bem">⭐</span><h3>النجوم</h3><div class="bn" id="dStars">0</div><small>من أسئلة الاختبار</small></div>
+    <div class="bt t-streak"><span class="bem">🌷</span><h3>دروس متاحة</h3><div class="bn" id="dOpen">0</div><small>مهارة متاحة للمذاكرة</small></div>
+    <div class="bt t-acts"><div class="bacts"><button onclick="show('lessons')"><i>📖</i>شرح</button><button onclick="show('lessons')"><i>✏️</i>أمثلة</button><button onclick="show('lessons')"><i>🎮</i>تدريب</button><button onclick="show('lessons')"><i>📈</i>تقدّمي</button></div></div>
   </section>
   <section class="card"><h3>🌷 كل خطوة صغيرة بتقرّبك</h3><p>مفيش حد بيفهم كل حاجة من أول مرة. خدي وقتك، ولو احتجتي تلميح هتلاقيه جنب كل سؤال.</p></section>
   <section class="card pink team"><div class="bow">🎀</div><h3>شاركوا في عمل الموقع 💗</h3>
@@ -279,9 +278,15 @@ setTimeout(()=>$('loader').classList.add('off'),900);
 <script src="s2k2.js"></script>
 <script src="s2k2-b.js"></script>
 <script src="s2k2-c.js"></script>
-<script src="foundation.js"></script>
+<script src="s2k3-ui.js"></script>
+<script src="s2k3-bank.js"></script>
+<script src="s2k3.js"></script>
+<script src="s2k3-b.js"></script>
+<script src="s2k3-c.js"></script>
 <script src="foundation.js"></script>
   <script src="extras.js"></script>
   <script src="account.js"></script>
+  <script src="dash.js"></script>
 </body>
-</html>
+  </html>
+  
