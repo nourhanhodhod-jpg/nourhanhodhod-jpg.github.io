@@ -70,10 +70,11 @@ main{max-width:720px;margin:0 auto;padding:12px 16px 40px}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media (min-width:600px){.hero h1{font-size:2.1rem}.opts{grid-template-columns:1fr 1fr}}
 </style>
-<link rel="stylesheet" href="theme.css?v=1">
+<link rel="stylesheet" href="app.css?v=2">
 </head>
 <body>
 <div id="loader"><span>🎀</span></div>
+<div id="splash" aria-live="polite"></div>
 <header>
   <div class="brand">🎀 موقعي التعليمي</div>
   <nav>
@@ -103,14 +104,6 @@ main{max-width:720px;margin:0 auto;padding:12px 16px 40px}
     <h2 id="greet"></h2>
     <button class="btn" onclick="show('lessons')">يلا نبدأ المذاكرة</button>
     <button class="link" onclick="editName()">تعديل الاسم ✏️</button>
-  </section>
-  <section class="bento" aria-label="لوحة التقدم">
-    <div class="bt t-wide"><span class="bem">🎀</span><h3>رحلة التأسيس</h3><div><div class="bn" style="direction:rtl" id="dWide">ابدئي أول مهارة</div><button class="btn" onclick="show('lessons')">كمّلي المذاكرة ✨</button></div></div>
-    <div class="bt t-prog"><h3>مهارات أتقنتيها</h3><div class="bring" id="dRing"><b id="dRingTxt">0%</b></div><small id="dProg">٠ من ٠</small></div>
-    <div class="bt t-coin"><span class="bem">🪙</span><h3>العملات</h3><div class="bn" id="dCoins">0</div><small>كل إجابة صح بتكسّبك</small></div>
-    <div class="bt t-star"><span class="bem">⭐</span><h3>النجوم</h3><div class="bn" id="dStars">0</div><small>من أسئلة الاختبار</small></div>
-    <div class="bt t-streak"><span class="bem">🌷</span><h3>دروس متاحة</h3><div class="bn" id="dOpen">0</div><small>مهارة متاحة للمذاكرة</small></div>
-    <div class="bt t-acts"><div class="bacts"><button onclick="show('lessons')"><i>📖</i>شرح</button><button onclick="show('lessons')"><i>✏️</i>أمثلة</button><button onclick="show('lessons')"><i>🎮</i>تدريب</button><button onclick="show('lessons')"><i>📈</i>تقدّمي</button></div></div>
   </section>
   <section class="card"><h3>🌷 كل خطوة صغيرة بتقرّبك</h3><p>مفيش حد بيفهم كل حاجة من أول مرة. خدي وقتك، ولو احتجتي تلميح هتلاقيه جنب كل سؤال.</p></section>
   <section class="card pink team"><div class="bow">🎀</div><h3>شاركوا في عمل الموقع 💗</h3>
@@ -284,9 +277,7 @@ setTimeout(()=>$('loader').classList.add('off'),900);
 <script src="s2k3-b.js"></script>
 <script src="s2k3-c.js"></script>
 <script src="foundation.js"></script>
-  <script src="extras.js"></script>
   <script src="account.js"></script>
-  <script src="dash.js"></script>
+  <script src="app.js?v=2"></script>
 </body>
-  </html>
-  
+</html>
