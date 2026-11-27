@@ -146,6 +146,8 @@ ${c.examples.map((x, i) => `<section class="card step"><h3>✏️ مثال ${i +
     else if (a === 'next') next(id);
   });
 
+  /* واجهة للتنقل من التصميم الجديد (لا تغيّر أي منطق قديم) */
+  window.FND = { root, open: id => { sec = SECTIONS.find(s => id.startsWith(s.id + 'k')); sk = id; render(); }, state: () => ({ sec: sec && sec.id, sk }) };
   let cls = '';
   try { cls = localStorage.getItem('cls') || ''; } catch (e) {}
   const tot = () => SECTIONS.reduce((a, s) => { const x = stat(s); return { n: a.n + x.n, d: a.d + x.d }; }, { n: 0, d: 0 });
@@ -230,4 +232,5 @@ ${bar(t.d, t.n)}<small>أتقنتي ${t.d} من ${t.n} مهارات متاحة</
   const lv = LS.g('view');
   if (lv === 'found') window.show('found'); else if (lv === 'hub' || lv === 'lessons') window.show('hub');
 })();
-                                    
+
+                                                                      
